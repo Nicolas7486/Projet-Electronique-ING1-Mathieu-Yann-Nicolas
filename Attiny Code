@@ -1,0 +1,39 @@
+#include <Tiny4kOLED.h>
+#include <TinyWireM.h>
+#include <Arduino.h>
+
+const int buzzerPin = 1;
+
+
+void setup() {
+  oled.begin(128, 64, sizeof(tiny4koled_init_128x64br), tiny4koled_init_128x64br);
+  oled.clear();
+  oled.on();
+  oled.setFont(FONT6X8);
+  pinMode(buzzerPin, OUTPUT);
+}
+
+
+void loop() {
+  oled.setCursor(0, 0);
+  oled.print("TEST");
+  tone(buzzerPin, 261.63, 1000);  // 261.63 Hz est la fréquence de la note Do (C4)
+
+  // Attends la durée de la note
+  delay(1100);
+
+  // Arrête la note
+  noTone(buzzerPin);
+  while (true);
+}
+
+//plaformio.ini
+lib_deps = 
+	datacute/Tiny4kOLED@^2.3.0
+	adafruit/TinyWireM@^1.1.3
+upload_protocol = stk500v1 
+upload_flags =
+                -P$UPLOAD_PORT
+                -b$UPLOAD_SPEED 
+upload_port = COM5
+upload_speed = 19200
